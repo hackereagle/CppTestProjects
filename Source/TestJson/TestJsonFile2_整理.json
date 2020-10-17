@@ -1,0 +1,25 @@
+{
+  
+  "Period Algorithm": {
+    "array": [
+      "TextBox",
+      {
+        "RangeMax": 1000,
+        "RangeMin": 0,
+        "ValueType": "int"
+      }
+    ],
+    "object": {
+      "TextBox": {
+        "RangeMax": 1000,
+        "RangeMin": 0,
+        "ValueType": "int"
+      }
+    }
+  },
+  "test other method": {
+    "array": [ 1, 2, 3 ],
+    "pi": 3.1415926,
+    "test": { "obj": 42 }
+  }
+}

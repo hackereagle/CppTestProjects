@@ -1,0 +1,1 @@
+{"Period Algorithm":{"Direction":{"ComboBox":{"horizontal":{"picture":null},"verticle":{"picture":null}}},"Peek":{"SliderBar":{"RangeMax":100000,"RangeMin":-100000,"Step":1}},"Period":{"TextBox":{"RangeMax":1000,"RangeMin":0,"ValueType":"int"}}}}
