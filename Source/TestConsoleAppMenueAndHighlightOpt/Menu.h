@@ -3,6 +3,10 @@
 #define _H_MENU_
 
 #include "BaseMenu.h"
+
+// here record some idea:
+// The feature of reading option from file would be a class can read option as be instance
+// and can get option from its properties
 class MainMenu : public BaseMenu
 {
 public:
