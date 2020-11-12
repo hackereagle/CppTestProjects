@@ -2,7 +2,7 @@
 #ifndef QUEUE_USING_LIST_C_H_
 #define QUEUE_USING_LIST_C_H_
 
-struct  Node
+struct Node
 {
 	int data;
 	struct Node *next;
@@ -10,10 +10,8 @@ struct  Node
 typedef struct Node QNode;
 typedef QNode *LQueue;
 
-LQueue front = nullptr;
-LQueue rear = nullptr;
-
 int isQueueEmpty();
-int enquue(int d);
+void enqueue(int d);
 int dequeue();
-#endif QUEUE_USING_LIST_C_H_
+void TestQueue_UsingList_C();
+#endif QUEUE_USING_LIST_C_H_ 
