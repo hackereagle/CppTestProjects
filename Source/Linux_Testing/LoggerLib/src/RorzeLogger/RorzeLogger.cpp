@@ -18,3 +18,8 @@ RorzeLogger *RorzeLogger::GetInsance()
 
     return RorzeLogger::mInstance;
 }
+
+void RorzeLogger::AsyncWrite(char* msg)
+{
+
+}
