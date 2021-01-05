@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 
+Logger* Logger::mInstance = nullptr;
+
 Logger::Logger()
 {
 

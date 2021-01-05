@@ -1,6 +1,7 @@
 #ifndef _RORZE_LOGGER_H_
 #define _RORZE_LOGGER_H_ 
 
+#include <cstddef>
 
 class Logger
 {
@@ -12,6 +13,5 @@ public:
 private:
     Logger();
     static Logger *mInstance;
-
 };
  #endif //_RORZE_LOGGER_H_
