@@ -6,3 +6,5 @@ add_library(${PROJECT_NAME} SHARED ${DIR_SRC})
 target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_STANDARD 11)
