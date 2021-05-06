@@ -5,6 +5,7 @@ aux_source_directory(. DIR_SRC)
 add_library(${PROJECT_NAME} SHARED ${DIR_SRC})
 target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 
+set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_STANDARD 11)

@@ -9,6 +9,7 @@ set_target_properties(myLib PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/src
 add_executable(${PROJECT_NAME} ${DIR_SRC})
 target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS} myLib)
 
+set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_STANDARD 11)
