@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "make build directory",
+            "label": "create build directory",
             "type": "shell",
             "command": "cmake -E make_directory build",
             "problemMatcher": [],

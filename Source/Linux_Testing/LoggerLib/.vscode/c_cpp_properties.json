@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/src/Logger/**"
+                "${workspaceFolder}/src/Logger/**",
+                "${workspaceFolder}/src/Logger.Testing/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

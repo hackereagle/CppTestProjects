@@ -2,16 +2,35 @@
 #define _RORZE_LOGGER_H_ 
 
 #include <cstddef>
+#include <thread>
+#include <queue>
+#include <memory>
+#include "LogArgs.h"
 
 class Logger
 {
 public:
-    static Logger *GetInsance();
-    ~Logger();
+    static Logger& GetInsance();
+    bool Initialize(LogLevel fileLogLevel = LogLevel::LOGINFO);
     void AsyncWrite(char *msg);
+    void RestarAsyncWrite();
+    void StopAsyncWrite();
 
 private:
+    static Logger* mInstance;
+    std::thread mBackgroundWriteLog;
+    int mWritePeriod = 5; // unit: ms
+    bool mIsInitialize = false;
+    std::queue<std::unique_ptr<LogArgs>> mLogBuffer;
+    bool mIsAsyncWrite = true;
+    const std::string mLogPath = std::string("~/home/Logs");
+    // setting
+    // TODO: In future, the setting would be wraped to a class and judge whether write log.
+    LogLevel mLevel;
+
     Logger();
-    static Logger *mInstance;
+    ~Logger();
+    void AsyncWriteLogService();
+    void CheckDirectoryExist(std::string path);
 };
  #endif //_RORZE_LOGGER_H_
