@@ -12,7 +12,8 @@ class Logger
 public:
     static Logger& GetInsance();
     bool Initialize(LogLevel fileLogLevel = LogLevel::LOGINFO);
-    void AsyncWrite(char *msg);
+    void AsyncWrite(LogType type, const char *msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr);
+    void AsyncWrite(LogType type, std::string msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr);
     void RestarAsyncWrite();
     void StopAsyncWrite();
 

@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     std::cout << "Time = " << arg->GetTime() << std::endl;
     delete arg;
 
-    Logger::GetInsance().AsyncWrite((char*)"test");
+    Logger::GetInsance().AsyncWrite(LogType::Application, "test", LogLevel::LOGINFO);
 
     getchar();
     return EXIT_SUCCESS;

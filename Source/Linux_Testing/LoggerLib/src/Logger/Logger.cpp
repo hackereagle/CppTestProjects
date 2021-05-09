@@ -37,12 +37,6 @@ bool Logger::Initialize(LogLevel fileLogLevel = LogLevel::LOGINFO)
     return isSucess;
 }
 
-void Logger::AsyncWrite(char* msg)
-{
-    std::cout << std::string(msg) << std::endl;
-    // mLofBuffer.push
-}
-
 void Logger::AsyncWriteLogService()
 {
     if(!mIsInitialize) {
@@ -56,5 +50,15 @@ void Logger::AsyncWriteLogService()
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(this->mWritePeriod));
     }
-    
+}
+
+void Logger::AsyncWrite(LogType type, const char *msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr)
+{
+    std::cout << std::string(msg) << std::endl;
+    this->mLogBuffer.push(std::make_unique<LogArgs>(type, msg, level, time));
+}
+
+void Logger::AsyncWrite(LogType type, std::string msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr)
+{
+    this->mLogBuffer.push(std::make_unique<LogArgs>(type, msg.c_str(), level, time));
 }

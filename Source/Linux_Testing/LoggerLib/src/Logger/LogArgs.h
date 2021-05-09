@@ -18,6 +18,7 @@ public:
         if(time == nullptr)
             mTime = std::make_shared<DateTime>();
     }
+
     ~LogArgs(){
         // test
         std::cout << "LogArgs be deleted!" << std::endl;

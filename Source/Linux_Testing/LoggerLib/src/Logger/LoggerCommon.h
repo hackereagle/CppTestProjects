@@ -2,14 +2,15 @@
 #define _LOGGER_COMMON_H_
 
 #define LOGTYPE_VALUE_TABLE \
-    LOGTYPE_TABLE(Start,      "Start") \
-    LOGTYPE_TABLE(Camera,     "Camera") \
-    LOGTYPE_TABLE(Socket,     "Socket") \
-    LOGTYPE_TABLE(Robot,      "Robot") \
-    LOGTYPE_TABLE(TeachData,  "TeachData") \
-    LOGTYPE_TABLE(UnitState,  "UnitState") \
-    LOGTYPE_TABLE(Exception,  "Exception") \
-    LOGTYPE_TABLE(Final,      "Final") 
+    LOGTYPE_TABLE(Start,       "Start") \
+    LOGTYPE_TABLE(Camera,      "Camera") \
+    LOGTYPE_TABLE(Socket,      "Socket") \
+    LOGTYPE_TABLE(Robot,       "Robot") \
+    LOGTYPE_TABLE(TeachData,   "TeachData") \
+    LOGTYPE_TABLE(UnitState,   "UnitState") \
+    LOGTYPE_TABLE(Application, "Application") \
+    LOGTYPE_TABLE(Exception,   "Exception") \
+    LOGTYPE_TABLE(Final,       "Final") 
 
 #define LOGTYPE_TABLE(a, b) a,
 enum LogType {LOGTYPE_VALUE_TABLE};
