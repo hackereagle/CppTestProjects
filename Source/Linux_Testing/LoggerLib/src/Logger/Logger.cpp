@@ -13,7 +13,9 @@ std::mutex obj;
 
 Logger::Logger()
 {
-
+    std::string env = getenv("HOME");
+    std::cout << env << std::endl;
+    this->mLogPath = env + this->mLogPath;
 }
 
 Logger::~Logger()
@@ -50,7 +52,8 @@ bool Logger::Initialize(LogLevel fileLogLevel)
 void Logger::CheckDirectoryExist(std::string& path)
 {
     std::filesystem::path dir(path);
-    if(!std::filesystem::exists(dir)) {
+    bool isExist = std::filesystem::exists(dir);
+    if(!isExist) {
         std::filesystem::create_directories(dir);
     }
 }
@@ -58,7 +61,7 @@ void Logger::CheckDirectoryExist(std::string& path)
 void Logger::WriteToFile(std::unique_ptr<LogArgs> log)
 {
     if(log->GetLevel() >= this->mLevel){
-        std::string path = this->mLogPath + log->GetLogDate() + mPathSpacer + EnumToString(log->GetType()) + mPathSpacer;
+        std::string path = this->mLogPath + mPathSpacer + log->GetLogDate() + mPathSpacer + EnumToString(log->GetType()) + mPathSpacer;
         std::string filename = EnumToString(log->GetType()) + log->GetLogHour() + ".log";
         std::string logFile = path + filename;
 

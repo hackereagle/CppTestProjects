@@ -28,10 +28,11 @@ public:
         std::string time;
         try{
             std::ostringstream ss;
-            ss << mTime->GetYear()
-               << "." << std::setfill('0') << std::setw(2) << mTime->GetMonth()
-               << "." << std::setfill('0') << std::setw(2) << mTime->GetDay()
-               << " " << std::setfill('0') << std::setw(2) << mTime->GetHour()
+            // ss << mTime->GetYear()
+            //    << "." << std::setfill('0') << std::setw(2) << mTime->GetMonth()
+            //    << "." << std::setfill('0') << std::setw(2) << mTime->GetDay()
+            //    << " " << std::setfill('0') << std::setw(2) << mTime->GetHour()
+            ss << std::setfill('0') << std::setw(2) << mTime->GetHour()
                << ":" << std::setfill('0') << std::setw(2) << mTime->GetMinute()
                << ":" << std::setfill('0') << std::setw(2) << mTime->GetSecond()
                << "." << std::setfill('0') << std::setw(2) << mTime->GetMillisecond();
