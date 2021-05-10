@@ -23,7 +23,8 @@ public:
         // test
         std::cout << "LogArgs be deleted!" << std::endl;
     }
-    std::string GetTime(){
+
+    std::string GetLogTime(){
         std::string time;
         try{
             std::ostringstream ss;
@@ -33,7 +34,7 @@ public:
                << " " << std::setfill('0') << std::setw(2) << mTime->GetHour()
                << ":" << std::setfill('0') << std::setw(2) << mTime->GetMinute()
                << ":" << std::setfill('0') << std::setw(2) << mTime->GetSecond()
-               << "." << std::setfill('0') << std::setw(2) << mTime->GetMillisecond() << std::endl;
+               << "." << std::setfill('0') << std::setw(2) << mTime->GetMillisecond();
             time = ss.str();
         }
         catch(std::exception ex){
@@ -41,6 +42,36 @@ public:
         }
         return time;
     }
+
+    std::string GetLogDate(){
+        std::string time;
+        try{
+            std::ostringstream ss;
+            ss << mTime->GetYear()
+               << "-" << std::setfill('0') << std::setw(2) << mTime->GetMonth()
+               << "-" << std::setfill('0') << std::setw(2) << mTime->GetDay();
+            time = ss.str();
+        }
+        catch(std::exception ex){
+            std::cout << "In LogArgs occur ERROR: " << ex.what() << std::endl;
+        }
+        return time;
+    }
+
+    std::string GetLogHour(){
+        std::string time;
+        try{
+            std::ostringstream ss;
+            ss << std::setfill('0') << std::setw(2) << mTime->GetHour();
+            time = ss.str();
+        }
+        catch(std::exception ex){
+            std::cout << "In LogArgs occur ERROR: " << ex.what() << std::endl;
+        }
+        return time;
+
+    }
+
     LogType GetType(){ return mType;}
     LogLevel GetLevel(){ return mLevel;}
     const char* GetActionMessage(){ return mActionMessage;}

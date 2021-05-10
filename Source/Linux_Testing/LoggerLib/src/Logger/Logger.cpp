@@ -1,9 +1,11 @@
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <mutex>
 #include <chrono>
 #include <sys/stat.h>
 #include <filesystem>
+#include <utility>
 #include "Logger.h"
 
 Logger* Logger::mInstance = nullptr;
@@ -29,14 +31,51 @@ Logger& Logger::GetInsance()
     return *Logger::mInstance;
 }
 
-bool Logger::Initialize(LogLevel fileLogLevel = LogLevel::LOGINFO)
+bool Logger::Initialize(LogLevel fileLogLevel)
 {
     bool isSucess = false;
 
     this->mLevel = fileLogLevel;
-    isSucess = true;
+    if(this->mIsInitialize == false){
+        this->mIsInitialize = true;
+        mIsAsyncWrite = true;
+        mBackgroundWriteLog = std::thread(&Logger::AsyncWriteLogService, this);
+
+        isSucess = true;
+    }
 
     return isSucess;
+}
+
+void Logger::CheckDirectoryExist(std::string& path)
+{
+    std::filesystem::path dir(path);
+    if(!std::filesystem::exists(dir)) {
+        std::filesystem::create_directories(dir);
+    }
+}
+
+void Logger::WriteToFile(std::unique_ptr<LogArgs> log)
+{
+    if(log->GetLevel() >= this->mLevel){
+        std::string path = this->mLogPath + log->GetLogDate() + mPathSpacer + EnumToString(log->GetType()) + mPathSpacer;
+        std::string filename = EnumToString(log->GetType()) + log->GetLogHour() + ".log";
+        std::string logFile = path + filename;
+
+        std::fstream fileStream;
+        std::filesystem::path logFilePath(logFilePath);
+        if(std::filesystem::exists(logFilePath)) {
+            fileStream.open(logFile, std::ios::out | std::ios::app);
+        }
+        else{
+            CheckDirectoryExist(path);
+            fileStream.open(logFile, std::ios::out | std::ios::app);
+        }
+        
+        fileStream << log->GetLogTime() << "\t" << log->GetActionMessage() << std::endl;
+        fileStream.close();
+        // std::cout << log->GetActionMessage() << std::endl;
+    }
 }
 
 void Logger::AsyncWriteLogService()
@@ -47,31 +86,44 @@ void Logger::AsyncWriteLogService()
 
     while (mIsAsyncWrite || this->mLogBuffer.size() > 0) {
         if(mLogBuffer.size() > 0){
-            // TODO: write to file
-            // mLogBuffer.pop
+            std::unique_ptr<LogArgs> _log = std::move(mLogBuffer.front());
+            mLogBuffer.pop();
+
+            WriteToFile(std::move(_log));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(this->mWritePeriod));
     }
 }
 
-void Logger::CheckDirectoryExist(std::string& path)
+void Logger::AsyncWrite(LogType type, const char *msg, LogLevel level, std::shared_ptr<DateTime> time)
 {
-    struct stat info;
-    if(stat(path.c_str(), &info) != 0 ||
-       !S_ISDIR(info.st_mode))
-    {
-        // mkdir(path.c_str(), 0777);
-        std::filesystem::create_directories(path);
+    if(!mIsInitialize) {
+        printf("Not initialize Logger!");
+        throw std::exception();
     }
-}
 
-void Logger::AsyncWrite(LogType type, const char *msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr)
-{
-    std::cout << std::string(msg) << std::endl;
     this->mLogBuffer.push(std::make_unique<LogArgs>(type, msg, level, time));
 }
 
-void Logger::AsyncWrite(LogType type, std::string msg, LogLevel level = LogLevel::LOGINFO, std::shared_ptr<DateTime> time = nullptr)
+void Logger::AsyncWrite(LogType type, std::string msg, LogLevel level, std::shared_ptr<DateTime> time)
 {
+    if(!mIsInitialize) {
+        printf("Not initialize Logger!");
+        throw std::exception();
+    }
+
     this->mLogBuffer.push(std::make_unique<LogArgs>(type, msg.c_str(), level, time));
+}
+
+void Logger::RestarAsyncWrite()
+{
+    if(!mBackgroundWriteLog.joinable() || mIsAsyncWrite == false){
+        mIsAsyncWrite = true;
+        mBackgroundWriteLog = std::thread(&Logger::AsyncWriteLogService, this);
+    }
+}
+
+void Logger::StopAsyncWrite()
+{
+    mIsAsyncWrite = false;
 }

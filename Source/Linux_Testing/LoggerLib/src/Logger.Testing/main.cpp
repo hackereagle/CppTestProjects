@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <memory>
+#include <thread>
+#include <chrono>
 #include "../Logger/Logger.h"
 #include "../Logger/DateTime.h"
 #include "../Logger/LogArgs.h"
@@ -26,10 +28,15 @@ int main(int argc, char* argv[])
     std::cout << "type = " << EnumToString(arg->GetType()) << std::endl;
     std::cout << "message = " << arg->GetActionMessage() << std::endl;
     std::cout << "Level = " << arg->GetLevel() << std::endl;
-    std::cout << "Time = " << arg->GetTime() << std::endl;
+    std::cout << "Time = " << arg->GetLogTime() << std::endl;
     delete arg;
 
-    Logger::GetInsance().AsyncWrite(LogType::Application, "test", LogLevel::LOGINFO);
+    std::cout << "\n\n=== Test Logger class ===" << std::endl;
+    Logger::GetInsance().Initialize();
+    Logger::GetInsance().AsyncWrite(LogType::Application, "test", LogLevel::LOGERROR);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    std::cout << "end testing" << std::endl;
 
     getchar();
     return EXIT_SUCCESS;

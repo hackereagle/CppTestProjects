@@ -5,6 +5,7 @@
 #include <thread>
 #include <queue>
 #include <memory>
+#include <string>
 #include "LogArgs.h"
 
 class Logger
@@ -24,7 +25,9 @@ private:
     bool mIsInitialize = false;
     std::queue<std::unique_ptr<LogArgs>> mLogBuffer;
     bool mIsAsyncWrite = true;
-    const std::string mLogPath = std::string("~/home/Logs");
+    const std::string mLogPath = std::string("~/Logs");
+    // const std::string mLogPath = std::string("/mnt/d");
+    const std::string mPathSpacer = std::string("/");
     // setting
     // TODO: In future, the setting would be wraped to a class and judge whether write log.
     LogLevel mLevel;
@@ -33,5 +36,6 @@ private:
     ~Logger();
     void AsyncWriteLogService();
     void CheckDirectoryExist(std::string& path);
+    void WriteToFile(std::unique_ptr<LogArgs> log);
 };
  #endif //_RORZE_LOGGER_H_
