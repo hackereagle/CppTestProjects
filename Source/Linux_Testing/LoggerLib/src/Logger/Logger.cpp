@@ -2,6 +2,8 @@
 #include <iostream>
 #include <mutex>
 #include <chrono>
+#include <sys/stat.h>
+#include <filesystem>
 #include "Logger.h"
 
 Logger* Logger::mInstance = nullptr;
@@ -49,6 +51,17 @@ void Logger::AsyncWriteLogService()
             // mLogBuffer.pop
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(this->mWritePeriod));
+    }
+}
+
+void Logger::CheckDirectoryExist(std::string& path)
+{
+    struct stat info;
+    if(stat(path.c_str(), &info) != 0 ||
+       !S_ISDIR(info.st_mode))
+    {
+        // mkdir(path.c_str(), 0777);
+        std::filesystem::create_directories(path);
     }
 }
 

@@ -32,6 +32,6 @@ private:
     Logger();
     ~Logger();
     void AsyncWriteLogService();
-    void CheckDirectoryExist(std::string path);
+    void CheckDirectoryExist(std::string& path);
 };
  #endif //_RORZE_LOGGER_H_
