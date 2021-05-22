@@ -14,8 +14,8 @@ std::mutex obj;
 Logger::Logger()
 {
     std::string env = getenv("HOME");
-    std::cout << env << std::endl;
-    this->mLogPath = env + this->mLogPath;
+    this->mLogPath = env +  std::string("/Logs");
+    std::cout << this->mLogPath << std::endl;
 }
 
 Logger::~Logger()

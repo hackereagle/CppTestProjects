@@ -25,8 +25,7 @@ private:
     bool mIsInitialize = false;
     std::queue<std::unique_ptr<LogArgs>> mLogBuffer;
     bool mIsAsyncWrite = true;
-    // const std::string mLogPath = std::string("~/Logs");
-    std::string mLogPath = std::string("/Logs");
+    mutable std::string mLogPath;
     const std::string mPathSpacer = std::string("/");
     // setting
     // TODO: In future, the setting would be wraped to a class and judge whether write log.
